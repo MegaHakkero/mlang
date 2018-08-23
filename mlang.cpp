@@ -15,7 +15,7 @@ extern "C" {
 // Reverse Polish language, copyleft Medjed 2018
 
 /*
- * Usage: mlang [expression]
+ * Usage: mlang [-e] [file | expression]
  *   If [expression] isn't provided, the standard input will be used to
  *   read them.
  *
@@ -364,8 +364,11 @@ I32 main(I32 argc, C8 **argv) {
 		if (!rpo_line(in))
 			return 1;
 		if (int_stack.size() > 1)
-			printf("Warning - Dangling values at stack top\n");
-			// the above is only a warning in non-REPL mode
+			printf("Warning - Dangling values at int stack top\n");
+		if (str_stack.size() > 1)
+			printf("Warning - Dangling values at str stack top\n");
+		if (int_stack.size()) printf("Stack top (int): %ld\n", int_stack.top());
+		if (str_stack.size()) printf("Stack top (str): \"%s\"\n", str_stack.top().c_str());
 		return 0;
 	}
 	if (optind < argc)
