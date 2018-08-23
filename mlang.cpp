@@ -129,7 +129,7 @@ bool do_div() {
 
 bool do_mod() {
 	if (int_stack.size() < 2) {
-		printf("Error - '%' requires two numbers\n");
+		printf("Error - '%%' requires two numbers\n");
 		return false;
 	}
 	I64 n2 = retpop<I64>(int_stack);
@@ -247,9 +247,9 @@ bool rpo_line(std::string& str) {
 		if (in_str || in_op) {
 			// we are in a character sequence - parse it.
 			if (is_seq_end_at(str, i, in_op)) {
-				if (i + 1 > str.size() - 1)
-					curstr += str.back();
 				if (in_op) {
+					if (i + 1 > str.size() - 1)
+						curstr += str.back();
 					// execute the operator
 					if (!do_op<std::string>(curstr))
 						return false;
