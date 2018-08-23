@@ -12,10 +12,10 @@ extern "C" {
 #include <unistd.h>
 }
 
-// Reverse Polish calculator / language, copyleft Medjed 2018
+// Reverse Polish language, copyleft Medjed 2018
 
 /*
- * Usage: rpoc [expression]
+ * Usage: mlang [expression]
  *   If [expression] isn't provided, the standard input will be used to
  *   read them.
  *
@@ -36,7 +36,7 @@ extern "C" {
 
 std::stack<I64> int_stack;
 std::stack<std::string> str_stack;
-std::string ops = " t^*/+-";
+std::string ops = " t^*/%+-";
 
 U0 push_int(I64 n, bool negate = false) {
 	DEBUG printf("push '%ld'\n", n);
@@ -127,6 +127,17 @@ bool do_div() {
 	return true;
 }
 
+bool do_mod() {
+	if (int_stack.size() < 2) {
+		printf("Error - '%' requires two numbers\n");
+		return false;
+	}
+	I64 n2 = retpop<I64>(int_stack);
+	I64 n1 = retpop<I64>(int_stack);
+	push_int(n1 % n2);
+	return true;
+}
+
 bool do_add() {
 	if (int_stack.size() < 2) {
 		printf("Syntax error - '+' requires two numbers\n");
@@ -203,6 +214,9 @@ bool do_op(S& s) {
 	else
 	if (op == "/")
 		return do_div();
+	else
+	if (op == "%")
+		return do_mod();
 	else
 	if (op == "+")
 		return do_add();
