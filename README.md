@@ -16,7 +16,7 @@ explanations of some of the operators. <br>
 
 Oh yeah, you can compile this with
 ```
-g++ -Wall -std=c++14 -o mlang
+g++ -I. -Wall -std=c++14 -o mlang
 ```
 if you wanna do it the way I do. Probably works with clang too anyways.<br><br>
 
