@@ -129,7 +129,7 @@ bool do_div() {
 
 bool do_mod() {
 	if (int_stack.size() < 2) {
-		printf("Error - '%' requires two numbers\n");
+		printf("Error - '%%' requires two numbers\n");
 		return false;
 	}
 	I64 n2 = retpop<I64>(int_stack);
